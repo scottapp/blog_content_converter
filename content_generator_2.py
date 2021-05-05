@@ -227,8 +227,8 @@ def convert_files():
 def convert_file(topic, project_name, file_name, title):
     assert file_name.endswith('.ipynb'), 'error file format, %s' % file_name
 
-    source_dir = './source/%s' % project_name
-    stage_dir = './stage/%s' % project_name
+    source_dir = './source/%s/%s' % (topic, project_name)
+    stage_dir = './stage/%s/%s' % (topic, project_name)
 
     src_path = '%s/%s' % (source_dir, file_name)
     src_md_path = '%s/%s.md' % (source_dir, file_name.split('.')[0])
@@ -248,13 +248,14 @@ def convert_file(topic, project_name, file_name, title):
 
 if __name__ == '__main__':
 
-    project_name = 'test'.lower()
+    topic_name = 'SageMaker'
+    project_name = 'Demos'
 
-    with open('./source/%s/pages_data.csv' % project_name, 'r') as f:
+    with open('./source/%s/%s/pages_data.csv' % (topic_name, project_name), 'r') as f:
         lines = f.readlines()
 
-    if not os.path.isdir('./stage/%s' % project_name):
-        os.makedirs('./stage/%s' % project_name)
+    if not os.path.isdir('./stage/%s/%s' % (topic_name, project_name)):
+        os.makedirs('./stage/%s/%s' % (topic_name, project_name))
 
     for line in lines:
         if not line:
@@ -266,7 +267,7 @@ if __name__ == '__main__':
         file_name = data[0].strip()
         topic = data[1].strip()
         sidebar_title = data[3].strip()
-        print('processing - ', file_name, topic, sidebar_title)
+        print('processing - ', topic, project_name, file_name, sidebar_title)
 
         convert_file(topic, project_name, file_name, sidebar_title)
 
