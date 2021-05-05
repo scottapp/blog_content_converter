@@ -224,14 +224,14 @@ def convert_files():
         shutil.move(src_md_path, dst_md_path)
 
 
-def convert_file(topic, project_name, file_name, title):
+def convert_file(source_dir, topic, project_name, file_name, title):
     assert file_name.endswith('.ipynb'), 'error file format, %s' % file_name
 
-    source_dir = './source/%s/%s' % (topic, project_name)
+    source_project_dir = '%s/%s/%s' % (source_dir, topic, project_name)
     stage_dir = './stage/%s/%s' % (topic, project_name)
 
-    src_path = '%s/%s' % (source_dir, file_name)
-    src_md_path = '%s/%s.md' % (source_dir, file_name.split('.')[0])
+    src_path = '%s/%s' % (source_project_dir, file_name)
+    src_md_path = '%s/%s.md' % (source_project_dir, file_name.split('.')[0])
     dst_md_path = '%s/%s.md' % (stage_dir, file_name.split('.')[0])
 
     output_img_dir = '/img/%s/%s/%s' % (topic, project_name, file_name.split('.')[0])
@@ -246,12 +246,8 @@ def convert_file(topic, project_name, file_name, title):
     shutil.move(src_md_path, dst_md_path)
 
 
-if __name__ == '__main__':
-
-    topic_name = 'SageMaker'
-    project_name = 'Demos'
-
-    with open('./source/%s/%s/pages_data.csv' % (topic_name, project_name), 'r') as f:
+def convert_project(source_dir, topic_name, project_name):
+    with open('%s/%s/%s/pages_data.csv' % (source_dir, topic_name, project_name), 'r') as f:
         lines = f.readlines()
 
     if not os.path.isdir('./stage/%s/%s' % (topic_name, project_name)):
@@ -269,5 +265,19 @@ if __name__ == '__main__':
         sidebar_title = data[3].strip()
         print('processing - ', topic, project_name, file_name, sidebar_title)
 
-        convert_file(topic, project_name, file_name, sidebar_title)
+        convert_file(source_dir, topic, project_name, file_name, sidebar_title)
 
+
+if __name__ == '__main__':
+
+    source_dir = './source'
+    topic_name = 'SageMaker'
+
+    projects = list()
+    files = os.listdir('%s/%s' % (source_dir, topic_name))
+    for file in files:
+        if os.path.isdir('%s/%s/%s' % (source_dir, topic_name, file)):
+            projects.append(file)
+
+    for project in projects:
+        convert_project(source_dir, topic_name, project)
