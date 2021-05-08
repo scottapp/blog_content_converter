@@ -281,3 +281,5 @@ if __name__ == '__main__':
 
     for project in projects:
         convert_project(source_dir, topic_name, project)
+
+    shutil.move('/img/%s' % topic_name, './stage_static/%s' % topic_name)
