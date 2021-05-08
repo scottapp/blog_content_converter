@@ -130,7 +130,6 @@ dmypy.json
 
 source/test/
 stage/
+stage_static/
 build/
 output/
-
-
