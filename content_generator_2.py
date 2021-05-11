@@ -1,7 +1,7 @@
 import os
 import shutil
 import tempfile
-import git
+#import git
 import collections
 from nbconvert import MarkdownExporter
 from nbconvert.writers import FilesWriter
@@ -16,8 +16,10 @@ def convert_notebook(src_path, output_img_dir):
     app.convert_single_notebook(src_path)
 
 
+"""
 def clone(top_repo_dir, repo_url):
     git.Git(top_repo_dir).clone(repo_url)
+"""
 
 
 def get_project_readme(top_repo_dir, project_name):
