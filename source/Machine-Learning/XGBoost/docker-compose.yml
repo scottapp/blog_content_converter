@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jupyter-base:0.1
+
+  server:
+    image: jupyter-base:0.1
+    container_name: jupyter-server
+    volumes:
+      - ./:/home/jovyan/workspace
+    ports:
+      - "8888:8888"
