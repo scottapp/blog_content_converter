@@ -248,9 +248,21 @@ def convert_file(source_dir, topic, project_name, file_name, title):
     shutil.move(src_md_path, dst_md_path)
 
 
-def convert_project(source_dir, topic_name, project_name):
-    with open('%s/%s/%s/_pages_data.csv' % (source_dir, topic_name, project_name), 'r') as f:
-        lines = f.readlines()
+def read_project_data(line):
+    data = line.strip().split(',')
+    assert len(data) == 4, 'error number of columns'
+    project_data = dict()
+    project_data['topic'] = data[0].strip()
+    project_data['project_name'] = data[1].strip()
+    project_data['sidebar_title'] = data[2].strip()
+    project_data['file_name'] = data[3].strip()
+    return project_data
+
+
+def convert_project(source_dir, project_data):
+
+    project_name = project_data['project_name']
+    assert project_name, 'error project name, %s' % project_name
 
     if not os.path.isdir('./stage/%s/%s' % (topic_name, project_name)):
         os.makedirs('./stage/%s/%s' % (topic_name, project_name))
@@ -277,12 +289,30 @@ if __name__ == '__main__':
 
     project_names = list()
     for topic_name in topic_names:
-        files = os.listdir('%s/%s' % (source_dir, topic_name))
-        for file in files:
-            if os.path.isdir('%s/%s/%s' % (source_dir, topic_name, file)):
-                project_names.append(file)
 
-    for project_name in project_names:
-        for topic_name in topic_names:
-            convert_project(source_dir, topic_name, project_name)
-            shutil.move('/img/%s' % topic_name, './stage_static/%s' % topic_name)
+        with open('%s/%s/_projects_data.csv' % (source_dir, topic_name), 'r') as f:
+            lines = f.readlines()
+        assert len(lines), 'error reading project data'
+
+        for line in lines:
+            project_data = read_project_data(line)
+
+            topic = project_data['topic']
+            assert topic, 'error topic name'
+            assert topic == topic_name, 'different topic name, %s, %s' % (topic, topic_name)
+
+            project_name = project_data['project_name']
+            assert project_name, 'error project name'
+
+            sidebar_title = project_data['sidebar_title']
+            assert sidebar_title, 'error sidebar title'
+
+            file_name = project_data['file_name']
+            assert file_name, 'error file name'
+
+            if not os.path.isdir('./stage/%s/%s' % (topic, project_name)):
+                os.makedirs('./stage/%s/%s' % (topic, project_name))
+
+            convert_file(source_dir, topic, project_name, file_name, sidebar_title)
+
+        shutil.move('/img/%s' % topic_name, './stage_static/%s' % topic_name)
