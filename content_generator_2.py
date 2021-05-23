@@ -273,15 +273,16 @@ def convert_project(source_dir, topic_name, project_name):
 if __name__ == '__main__':
 
     source_dir = './source'
-    topic_name = 'Tensorflow'
+    topic_names = ['Tensorflow']
 
-    projects = list()
-    files = os.listdir('%s/%s' % (source_dir, topic_name))
-    for file in files:
-        if os.path.isdir('%s/%s/%s' % (source_dir, topic_name, file)):
-            projects.append(file)
+    project_names = list()
+    for topic_name in topic_names:
+        files = os.listdir('%s/%s' % (source_dir, topic_name))
+        for file in files:
+            if os.path.isdir('%s/%s/%s' % (source_dir, topic_name, file)):
+                project_names.append(file)
 
-    for project in projects:
-        convert_project(source_dir, topic_name, project)
-
-    shutil.move('/img/%s' % topic_name, './stage_static/%s' % topic_name)
+    for project_name in project_names:
+        for topic_name in topic_names:
+            convert_project(source_dir, topic_name, project_name)
+            shutil.move('/img/%s' % topic_name, './stage_static/%s' % topic_name)
