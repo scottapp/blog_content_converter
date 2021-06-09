@@ -43,6 +43,7 @@ def replace_title(lines, repo_url, new_title):
     return lines
 
 
+"""
 def replace_title_2(lines):
     first_line = lines[0]
     if first_line.startswith('# '):
@@ -50,6 +51,7 @@ def replace_title_2(lines):
         front_matter = ['---\n', 'title: %s\n' % new_title, '---\n']
         return front_matter + lines[1:]
     return lines
+"""
 
 
 class Topic(object):
@@ -241,7 +243,9 @@ def convert_file(source_dir, topic, project_name, file_name, title):
 
     with open(src_md_path, 'r', encoding='utf8') as f:
         tmp_content = f.readlines()
-    new_content = replace_title(tmp_content, '', title)
+
+    front_matter = ['---\n', 'title: %s\n' % title, '---\n']
+    new_content = front_matter + tmp_content
     with open(src_md_path, 'w', encoding='utf8') as f:
         f.writelines(new_content)
 

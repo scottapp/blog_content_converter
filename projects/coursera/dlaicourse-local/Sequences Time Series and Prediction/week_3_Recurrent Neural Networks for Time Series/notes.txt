@@ -1,0 +1,5 @@
+More info on Huber loss
+https://en.wikipedia.org/wiki/Huber_loss
+
+Link to the LSTM lesson
+https://www.coursera.org/lecture/nlp-sequence-models/long-short-term-memory-lstm-KXoay

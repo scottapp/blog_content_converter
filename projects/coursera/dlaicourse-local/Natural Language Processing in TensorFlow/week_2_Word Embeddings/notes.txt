@@ -1,0 +1,9 @@
+IMDB reviews dataset
+http://ai.stanford.edu/~amaas/data/sentiment/
+
+TensorFlow datasets
+https://github.com/tensorflow/datasets/tree/master/docs/catalog
+https://www.tensorflow.org/datasets/catalog/overview
+
+Subwords text encoder
+https://www.tensorflow.org/datasets/api_docs/python/tfds/features/text/SubwordTextEncoder

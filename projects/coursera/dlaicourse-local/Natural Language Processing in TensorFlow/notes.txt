@@ -1,0 +1,13 @@
+NLP Datasets
+
+https://storage.googleapis.com/laurencemoroney-blog.appspot.com/bbc-text.csv -O /tmp/bbc-text.csv
+https://storage.googleapis.com/laurencemoroney-blog.appspot.com/sarcasm.json -O /tmp/sarcasm.json
+imdb, info = tfds.load("imdb_reviews", with_info=True, as_supervised=True)
+imdb, info = tfds.load("imdb_reviews/subwords8k", with_info=True, as_supervised=True)
+
+https://storage.googleapis.com/laurencemoroney-blog.appspot.com/training_cleaned.csv -O /tmp/training_cleaned.csv
+https://www.kaggle.com/kazanova/sentiment140
+https://nlp.stanford.edu/projects/glove/
+wget http://nlp.stanford.edu/data/glove.6B.zip
+
+

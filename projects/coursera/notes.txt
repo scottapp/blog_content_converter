@@ -1,0 +1,2 @@
+# enable jupter widgets before starting jupyter notebook
+jupyter nbextension enable --py widgetsnbextension --sys-prefix

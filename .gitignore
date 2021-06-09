@@ -133,3 +133,8 @@ stage/
 stage_static/
 build/
 output/
+
+tmp/
+data/
+
+*.zip

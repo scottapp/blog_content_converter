@@ -1,0 +1,6 @@
+
+link to Laurence's poetry
+https://storage.googleapis.com/laurencemoroney-blog.appspot.com/irish-lyrics-eof.txt
+
+Link to generating text using a character-based RNN
+https://www.tensorflow.org/tutorials/sequences/text_generation

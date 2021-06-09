@@ -1,2 +1,2 @@
-Tensorflow,Regression,Regression,regression.ipynb
-Tensorflow,CNN,Keras CNN,keras-CNN.ipynb
+Tensorflow, Classification, Cats and Dogs, cnn_classification_cats_and_dogs.ipynb
+Tensorflow, Classification, Sign Mnist, cnn_classification_sign_mnist.ipynb

@@ -1,0 +1,4 @@
+
+sun spots data
+https://storage.googleapis.com/laurencemoroney-blog.appspot.com/Sunspots.csv -O /tmp/sunspots.csv
+
