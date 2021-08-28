@@ -138,3 +138,4 @@ tmp/
 data/
 
 *.zip
+aws_env.py

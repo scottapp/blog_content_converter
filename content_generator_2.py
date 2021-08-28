@@ -6,6 +6,7 @@ import collections
 from nbconvert import MarkdownExporter
 from nbconvert.writers import FilesWriter
 from nbconvert.nbconvertapp import NbConvertApp
+from lxml.html.clean import Cleaner
 
 
 def convert_notebook(src_path, output_img_dir):
@@ -228,6 +229,25 @@ def convert_files():
         shutil.move(src_md_path, dst_md_path)
 
 
+def remove_scoped_style(lines):
+    in_style_block = False
+    out = []
+    for line in lines:
+        if line.startswith('<style scoped>'):
+            in_style_block = True
+            continue
+        if line.startswith('</style>'):
+            in_style_block = False
+            continue
+        if in_style_block:
+            continue
+        if line.strip().startswith("<tr style="):
+            out.append("<tr>")
+        else:
+            out.append(line)
+    return out
+
+
 def convert_file(source_dir, topic, project_name, file_name, title):
     assert file_name.endswith('.ipynb'), 'error file format, %s' % file_name
 
@@ -243,6 +263,8 @@ def convert_file(source_dir, topic, project_name, file_name, title):
 
     with open(src_md_path, 'r', encoding='utf8') as f:
         tmp_content = f.readlines()
+
+    tmp_content = remove_scoped_style(tmp_content)
 
     front_matter = ['---\n', 'title: %s\n' % title, '---\n']
     new_content = front_matter + tmp_content
@@ -289,7 +311,8 @@ def convert_project(source_dir, project_data):
 if __name__ == '__main__':
 
     source_dir = './source'
-    topic_names = ['Tensorflow']
+    #topic_names = ['Tensorflow']
+    topic_names = ['Tensorflow', "Machine_Learning", "Sagemaker"]
 
     project_names = list()
     for topic_name in topic_names:
@@ -319,4 +342,5 @@ if __name__ == '__main__':
 
             convert_file(source_dir, topic, project_name, file_name, sidebar_title)
 
-        shutil.move('/img/%s' % topic_name, './stage_static/%s' % topic_name)
+        if os.path.isdir('/img/%s' % topic_name):
+            shutil.move('/img/%s' % topic_name, './stage_static/%s' % topic_name)
